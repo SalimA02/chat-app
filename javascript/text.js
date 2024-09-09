@@ -13,12 +13,12 @@ form.onsubmit = (e)=>{
 
 
 sendBtn.onclick = ()=>{
-    // console.log("Helloidaisdh");
+    // console.log("Hello");
 
     // AJAX
 
     let xhr = new XMLHttpRequest(); // creating XML DOC
-    xhr.open("POST", "php/insert-chat.php", true);
+    xhr.open("POST", "php/insert-text.php", true);
     xhr.onload = ()=>{
         if(xhr.readyState === XMLHttpRequest.DONE){
             if(xhr.status === 200){
@@ -46,7 +46,7 @@ setInterval(()=>{
 
     let xhr = new XMLHttpRequest(); // creating XML DOC
 
-    xhr.open("POST", "php/get-chat.php", true);
+    xhr.open("POST", "php/get-text.php", true);
     xhr.onload = ()=>{
         if(xhr.readyState === XMLHttpRequest.DONE){
             if(xhr.status === 200){

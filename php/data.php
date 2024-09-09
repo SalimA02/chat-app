@@ -1,6 +1,7 @@
 <?php
     while($row = mysqli_fetch_assoc($sql)){
         // $outgoing_id = mysqli_real_escape_string($conn, $_POST['outgoing_id']);/
+        $outgoing_id = $_SESSION['unique_id'];
 
         $sql2 = "SELECT * FROM messages WHERE (incoming_msg_id = {$row['unique_id']}
                 OR outgoing_msg_id = {$row['unique_id']}) AND (outgoing_msg_id = {$outgoing_id}
@@ -20,13 +21,18 @@
         $msg .= '...';
 
 
-        # adding you if last message from user
-        ($outgoing_id == $row2['outgoing_msg_id']) ? $you = "You : " : $you = "";
-
+        // # adding you if last message from user
+        if($row2 == null){
+            $you = "";
+        }elseif($outgoing_id == $row2['outgoing_msg_id']){
+            $you = "You : ";
+        }else{
+            $you = "";
+        }
 
         ($row['status'] == "Offline now") ? $offline = "offline" : $offline = "Online now" ; 
 
-        $output .= '<a href="chat.php?user_id='.$row['unique_id'].'">
+        $output .= '<a href="text.php?user_id='.$row['unique_id'].'">
                         <div class="content">
                             <img src="php/imgs/'.$row['img'].'" alt="">
                             <div class="details">

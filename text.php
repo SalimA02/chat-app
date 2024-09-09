@@ -58,7 +58,7 @@ include_once "header.php";
             </section>
         </div>
         
-        <script src = "javascript/chat.js" ></script>
+        <script src = "javascript/text.js" ></script>
 
     </body>
 

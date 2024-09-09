@@ -4,10 +4,14 @@
     include_once "config.php";
     
 
-    $fname = mysqli_real_escape_string($conn, $_POST['fname']);
-    $lname = mysqli_real_escape_string($conn, $_POST['lname']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password   = mysqli_real_escape_string($conn, $_POST['password']);
+    // $fname = mysqli_real_escape_string($conn, $_POST['fname']);
+    // $lname = mysqli_real_escape_string($conn, $_POST['lname']);
+    // $email = mysqli_real_escape_string($conn, $_POST['email']);
+    // $password   = mysqli_real_escape_string($conn, $_POST['password']);
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
     if(!empty($fname)&&!empty($lname)&&!empty($email)&&!empty($password)){
         // input validation
@@ -24,6 +28,7 @@
                     $img_name = $_FILES['image']['name']; // get file name
                     $img_type = $_FILES['image']['type']; // get file type
                     $tmp_name = $_FILES['image']['tmp_name']; // tmp used to save file in our folder
+                    // echo $img_name; 
                     
                     //explode image and get extension
 
@@ -36,15 +41,17 @@
                         $time = time(); // for storing file
                         
                         $new_img_name = $time.$img_name;
+                        // echo $new_img_name;
                         
                         if(move_uploaded_file($tmp_name, "imgs/" . $new_img_name)){ // if true == successful
                             $status = "Active Now"; // once signed up, status is active
                             $random_id = rand(time(), 1000000); // create random id
+                            // echo $random_id;
                             
 
                             //insert data to table
 
-                            $sqli2 = mysqli_query($conn, "INSERT INTO  users (unique_id, fname, lname, email, password, img, status) 
+                            $sql2 = mysqli_query($conn, "INSERT INTO  users (unique_id, fname, lname, email, password, img, status) 
                                 VALUES  ({$random_id}, '{$fname}', '{$lname}', '{$email}', '{$password}', '{$new_img_name}', '{$status}')");
 
                             if($sql){ // if data inserted
@@ -55,7 +62,7 @@
                                     echo "success";
                                 }
                             }else{
-                                echo "Something went wrong, please try again!";
+                                echo "  SQL insert went wrong, please try again!";
                             }
                         }
 
@@ -70,14 +77,18 @@
             echo "$email - is not a valid email";
         }
 
-        // //check file
-        // if(isset($_FILES['file'])){
-
-        // }else{
-        //     echo "Please select an image file!";
-        // }
-       
+    
     }else{
-        echo "All inputs are required!";
+        if(empty($fname)){
+            echo "no first name".$fname;
+        }
+        if(empty($lname)){
+            echo " no last name".$fname;
+        }
+        if(empty($password)){
+            echo " no password".$fname;
+        }
+
+        echo " All inputs are required!".$fname;
     }
 ?>
